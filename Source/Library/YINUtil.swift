@@ -15,7 +15,7 @@ final class YINUtil {
   // Slow and eats a lot of CPU, but working
   class func difference2(buffer: [Float]) -> [Float] {
     let bufferHalfCount = buffer.count / 2
-    var resultBuffer = [Float](repeating:0.0, count:bufferHalfCount)
+    var resultBuffer = [Float](repeating: 0.0, count: bufferHalfCount)
 
     for tau in 0 ..< bufferHalfCount {
       for i in 0 ..< bufferHalfCount {
@@ -31,9 +31,9 @@ final class YINUtil {
   // Instruments shows roughly around 22% CPU usage, compared to 95% for difference2
   class func differenceA(buffer: [Float]) -> [Float] {
     let bufferHalfCount = buffer.count / 2
-    var resultBuffer = [Float](repeating:0.0, count:bufferHalfCount)
-    var tempBuffer = [Float](repeating:0.0, count:bufferHalfCount)
-    var tempBufferSq = [Float](repeating:0.0, count:bufferHalfCount)
+    var resultBuffer = [Float](repeating: 0.0, count: bufferHalfCount)
+    var tempBuffer = [Float](repeating: 0.0, count: bufferHalfCount)
+    var tempBufferSq = [Float](repeating: 0.0, count: bufferHalfCount)
     let len = vDSP_Length(bufferHalfCount)
     var vSum: Float = 0.0
 
@@ -62,7 +62,7 @@ final class YINUtil {
     let yinBufferSize = frameSize / 2
 
     // power terms calculation
-    var powerTerms = [Float](repeating:0, count:yinBufferSize)
+    var powerTerms = [Float](repeating: 0, count: yinBufferSize)
 
     _ = { (res: Float, element: Float) -> Float in
       res + element * element
@@ -136,7 +136,7 @@ final class YINUtil {
 
     vDSP_fft_zrip(fftSetup!, &yinStyleACFComplex, 1, log2n, FFTDirection(FFT_INVERSE))
 
-    var resultYinBuffer = [Float](repeating:0.0, count: yinBufferSize)
+    var resultYinBuffer = [Float](repeating: 0.0, count: yinBufferSize)
 
     for j in 0 ..< yinBufferSize {
       resultYinBuffer[j] = powerTerms[0] + powerTerms[j] - 2 * yinStyleACFRealp[j + yinBufferSize - 1]
